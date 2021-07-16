@@ -2,8 +2,8 @@
 
 namespace DavidPella\BeemSms\Channel;
 
-use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
 use Illuminate\Notifications\Notification;
+use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
 
 class BeemSmsChannel
 {

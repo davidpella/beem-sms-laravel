@@ -22,11 +22,11 @@ class BeemSmsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(BeemSmsClient::class, function (){
-            return new BeemSmsClient();
+            return new BeemSmsClient;
         });
 
         $this->app->bind("beem-sms", function (){
-            return new BeemSmsClient();
+            return new BeemSmsClient;
         });
     }
 }

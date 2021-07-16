@@ -7,7 +7,7 @@ This package makes it easy to send Twilio notifications (opens new window)with L
 You can install the package via composer:
 
 ```shell
-composer require davidpella/beem-sms
+composer require davidpella/beem-sms-laravel
 ```
 
 ##  Configuration

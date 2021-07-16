@@ -6,9 +6,15 @@ use DavidPella\BeemSms\BeemSmsClient;
 
 class BeemSmsMessage
 {
-    public $recipient;
+    /**
+     * @var string
+     */
+    protected string $recipient;
 
-    public $content;
+    /**
+     * @var string
+     */
+    protected string $content;
 
     public function send()
     {
@@ -18,24 +24,38 @@ class BeemSmsMessage
             ->send();
     }
 
-    public function getRecipient()
+    /**
+     * @return string
+     */
+    public function getRecipient(): string
     {
         return $this->recipient;
     }
 
-    public function getContent()
+    /**
+     * @return string
+     */
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function recipient($recipient)
+    /**
+     * @param $recipient
+     * @return $this
+     */
+    public function recipient($recipient): BeemSmsMessage
     {
         $this->recipient = $recipient;
 
         return $this;
     }
 
-    public function content($content)
+    /**
+     * @param $content
+     * @return $this
+     */
+    public function content($content): BeemSmsMessage
     {
         $this->content = $content;
 
