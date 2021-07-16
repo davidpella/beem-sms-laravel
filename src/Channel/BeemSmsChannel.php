@@ -2,15 +2,18 @@
 
 namespace DavidPella\BeemSms\Channel;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Notifications\Notification;
 use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
 
 class BeemSmsChannel
 {
+
     /**
      * @param $notifiable
      * @param Notification $notification
      * @throws CouldNotSendNotificationException
+     * @throws GuzzleException
      */
     public function send($notifiable, Notification $notification)
     {

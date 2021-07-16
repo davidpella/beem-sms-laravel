@@ -2,7 +2,10 @@
 
 namespace DavidPella\BeemSms\Channel;
 
+use BeemSms;
 use DavidPella\BeemSms\BeemSmsClient;
+use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
+use GuzzleHttp\Exception\GuzzleException;
 
 class BeemSmsMessage
 {
@@ -16,12 +19,15 @@ class BeemSmsMessage
      */
     protected string $content;
 
+    /**
+     * @return mixed
+     */
     public function send()
     {
-        (new BeemSmsClient())
-            ->message($this->getContent())
-            ->recipient($this->getRecipient())
-            ->send();
+        return BeemSms::sendMessage([
+            "message" => $this->getContent(),
+            "recipient" => $this->getRecipient(),
+        ]);
     }
 
     /**
