@@ -57,12 +57,41 @@ class AccountCreated extends Notification
 }
 ```
 
-In order to let your Notification know which phone are you sending to, the channel will look for the `phone` attribute of the Notifiable model. If you want to override this behaviour, add the routeNotificationForBeemSms method to your Notifiable model.
+In order to let your Notification know which phone are you sending to, the channel will look for the `phone` attribute of the Notifiable model. 
+
+If you want to override this behaviour, add the `routeNotificationForBeemSms` method to your Notifiable model.
 
 ```php
-class User 
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
 {
-    public function routeNotificationForBeemSms():string
+    use Notifiable;
+    
+    public function routeNotificationForBeemSms()
+    {
+        return $this->phone_number;
+    }
+}
+
+```
+
+Or
+
+```php
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+    
+    public function routeNotificationForBeemSms()
     {
         return "255762000000";
     }
@@ -70,36 +99,26 @@ class User
 
 ```
 
-## Available Message methods
+## Available message methods
 
-BeemSmsMessage  `content('Message body')`: Accepts a string value for the notification body.
-
-To use the Beem Sms Client Library you can use the facade, or request the instance from the service container:
+To use the Beem Sms Client Library you can use the facade:
 
 ```php
-\BeemSms::sendMessage([
+use DavidPella\BeemSms\Facades\BeemSms;
+
+BeemSms::send([
     "recipient" => "255762000000",
     "message" => "Using the facade to send a message.",
 ]);
 ```
 
-Using Facade
+Or request the instance from the service container
 
 ```php
-\BeemSms::recipient("255762764819")
-    ->message("Using the facade to send a message.")
-    ->send();
-```
-
-Using instance
-
-```php
-use DavidPella\BeemSms\BeemSmsClient;
-
-(new BeemSmsClient())
+app("DavidPella\BeemSms\BeemSmsClient")
     ->recipient("255762000000")
-    ->message("Using the facade to send a message.")
-    ->send();
+    ->message("Send sms message using laravel service container")
+    ->dispatch();
 ```
 
 ## Testing
