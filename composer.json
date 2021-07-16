@@ -1,5 +1,5 @@
 {
-    "name": "davidpella/beem-sms",
+    "name": "davidpella/beem-sms-laravel",
     "description": "Provides Beem notification channel for Laravel",
     "keywords": [
         "laravel",
@@ -9,7 +9,7 @@
         "davidpella",
         "beem-sms"
     ],
-    "homepage": "https://github.com/davidpella/beem-sms",
+    "homepage": "https://github.com/davidpella/beem-sms-laravel",
     "license": "MIT",
     "type": "library",
     "authors": [
