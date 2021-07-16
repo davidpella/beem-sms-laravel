@@ -34,7 +34,7 @@ class BeemSmsClient
      * @return JsonResponse
      * @throws CouldNotSendNotificationException|GuzzleException
      */
-    public function sendMessage(): JsonResponse
+    public function dispatch(): JsonResponse
     {
         try {
             $client = new Client([
@@ -77,7 +77,8 @@ class BeemSmsClient
     /**
      * @param array $payload
      * @return JsonResponse
-     * @throws CouldNotSendNotificationException|GuzzleException
+     * @throws CouldNotSendNotificationException
+     * @throws GuzzleException
      */
     public function send(array $payload): JsonResponse
     {
@@ -85,7 +86,7 @@ class BeemSmsClient
 
         $this->message($this->getMessage($payload));
 
-        return $this->sendMessage();
+        return $this->dispatch();
     }
 
     /**

@@ -19,10 +19,10 @@ class BeemSmsMessage
      */
     public function send()
     {
-        return BeemSms::send([
-            "message" => $this->getContent(),
-            "recipient" => $this->getRecipient(),
-        ]);
+        return app("DavidPella\BeemSms\BeemSmsClient")
+            ->recipient($this->getRecipient())
+            ->message($this->getContent())
+            ->dispatch();
     }
 
     /**
