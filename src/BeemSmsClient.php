@@ -13,33 +13,39 @@ use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
 
 class BeemSmsClient
 {
-    protected Client $client;
+    private string $apiKey;
 
-    protected $message;
+    private string $secretKey;
 
-    protected $recipient;
+    private string $baseUrl;
 
-    public function __construct()
+    protected string $message;
+
+    protected string $recipient;
+
+    public function __construct($apiKey, $secretKey)
     {
-        $this->client = new Client([
-            "base_uri" => config("beem-sms.base_uri"),
-            "defaults" => [
-                'verify' => false
-            ]
-        ]);
+        $this->apiKey       = $apiKey;
+        $this->secretKey    = $secretKey;
+        $this->baseUrl      = config("beem-sms.base_url");
     }
 
     /**
      * @return JsonResponse
+     * @throws CouldNotSendNotificationException|GuzzleException
      */
     public function send(): JsonResponse
     {
         try {
-            $response = $this->client->request('POST', 'send', [
-                "auth" => [
-                    config("beem-sms.api_key"),
-                    config("beem-sms.secret_key")
-                ],
+            $client = new Client([
+                "base_uri" => $this->baseUrl,
+                "defaults" => [
+                    'verify' => false
+                ]
+            ]);
+
+            $response = $client->request('POST', 'send', [
+                "auth" => [$this->apiKey, $this->secretKey],
                 "headers" => [
                     "Accept" => 'application/json',
                     "Content-Type" => "application/json",
@@ -58,21 +64,20 @@ class BeemSmsClient
                 ],
             ]);
 
-            return Response::json(["response" => json_decode(
-                $response->getBody()->getContents()
-            )]);
-        } catch (ClientException $exception) {
-            return Response::json(["error" => json_decode(
-                $exception->getResponse()->getBody()->getContents()
-            )]);
-        } catch (GuzzleException $exception) {
+            if (!$response) {
+                throw new CouldNotSendNotificationException("Service Unknown");
+            }
 
+            return $this->parseResponse($response);
+        } catch (ClientException $exception) {
+            return $this->parseException($exception);
         }
     }
 
     /**
      * @param array $payload
      * @return JsonResponse
+     * @throws CouldNotSendNotificationException|GuzzleException
      */
     public function sendMessage(array $payload): JsonResponse
     {
@@ -125,5 +130,27 @@ class BeemSmsClient
         return Arr::get($payload, "message", function () {
             throw new CouldNotSendNotificationException("Message is required");
         });
+    }
+
+    /**
+     * @param $response
+     * @return JsonResponse
+     */
+    protected function parseResponse($response): JsonResponse
+    {
+        return Response::json(["response" => json_decode(
+            $response->getBody()->getContents()
+        )]);
+    }
+
+    /**
+     * @param ClientException $exception
+     * @return JsonResponse
+     */
+    protected function parseException(ClientException $exception): JsonResponse
+    {
+        return Response::json(["error" => json_decode(
+            $exception->getResponse()->getBody()->getContents()
+        )]);
     }
 }

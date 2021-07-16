@@ -1,6 +1,6 @@
 # Beem SMS notifications channel for Laravel
 
-This package makes it easy to send Twilio notifications (opens new window)with Laravel 8.x
+This package makes it easy to send Beem sms notifications with Laravel 8.x
 
 ## Installation
 
@@ -22,7 +22,8 @@ BEEM_SMS_SECRET_KEY=
 
 ## Advanced configuration
 
-Run 
+Run to public configuration file `config` directory
+
 ```shell
 php artisan vendor:publish --provider="DavidPella\BeemSms\BeemSmsServiceProvider"
 ```
@@ -43,12 +44,12 @@ class AccountCreated extends Notification
 {
     use Queueable;
 
-    public function via($notifiable)
+    public function via($notifiable):array
     {
         return [BeemSmsChannel::class]; // or ["beem-sms"]
     }
 
-    public function toBeemSms($notifiable)
+    public function toBeemSms($notifiable):BeemSmsMessage
     {
         return (new BeemSmsMessage())
             ->content("Your {$notifiable->name} account was created!");
@@ -59,10 +60,14 @@ class AccountCreated extends Notification
 In order to let your Notification know which phone are you sending to, the channel will look for the `phone` attribute of the Notifiable model. If you want to override this behaviour, add the routeNotificationForBeemSms method to your Notifiable model.
 
 ```php
-public function routeNotificationForBeemSms()
+class User 
 {
-    return "255762000000";
+    public function routeNotificationForBeemSms():string
+    {
+        return "255762000000";
+    }
 }
+
 ```
 
 ## Available Message methods
@@ -72,7 +77,7 @@ BeemSmsMessage  `content('Message body')`: Accepts a string value for the notifi
 To use the Beem Sms Client Library you can use the facade, or request the instance from the service container:
 
 ```php
-BeemSms::sendMessage([
+\BeemSms::sendMessage([
     "recipient" => "255762000000",
     "message" => "Using the facade to send a message.",
 ]);
@@ -81,7 +86,7 @@ BeemSms::sendMessage([
 Using Facade
 
 ```php
-BeemSms::recipient("255762764819")
+\BeemSms::recipient("255762764819")
     ->message("Using the facade to send a message.")
     ->send();
 ```
@@ -89,9 +94,21 @@ BeemSms::recipient("255762764819")
 Using instance
 
 ```php
+use DavidPella\BeemSms\BeemSmsClient;
+
 (new BeemSmsClient())
     ->recipient("255762000000")
     ->message("Using the facade to send a message.")
     ->send();
 ```
+
+## Testing
+```shell 
+composer test
+```
+
+## Changelog
+Please see CHANGELOG for more information on what has changed recently.
+
+
 
