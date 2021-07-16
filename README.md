@@ -2,6 +2,25 @@
 
 This package makes it easy to send Beem sms notifications with Laravel 8.x
 
+Building on Laravel's Notification channel, this package allows you to send SMS notifications via the Vodafone SMS gateway service.
+
+Sending an SMS to a user becomes as simple as using:
+
+```php
+use App\Notifications\AccountCreated;
+ 
+$user->notify(new AccountCreated);
+```
+
+Or on-demand notifications
+
+```php
+use App\Notifications\AccountCreated;
+use Illuminate\Support\Facades\Notification;
+
+Notification::route("beem-sms", "255762000000")->notify(new AccountCreated);
+```
+
 ## Installation
 
 You can install the package via composer:
