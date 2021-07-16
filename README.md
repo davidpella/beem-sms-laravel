@@ -1,8 +1,6 @@
 # Beem SMS notifications channel for Laravel
 
-This package makes it easy to send Beem sms notifications with Laravel 8.x
-
-Building on Laravel's Notification channel, this package allows you to send SMS notifications via the Vodafone SMS gateway service.
+This package makes it easy to send Beem SMS notifications with Laravel 8.x
 
 Sending an SMS to a user becomes as simple as using:
 
