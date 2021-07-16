@@ -127,7 +127,7 @@ composer test
 ```
 
 ## Changelog
-Please see CHANGELOG for more information on what has changed recently.
+Please see [CHANGELOG](https://github.com/davidpella/beem-sms-laravel/blob/master/CHANGELOG.md) for more information on what has changed recently.
 
 
 
