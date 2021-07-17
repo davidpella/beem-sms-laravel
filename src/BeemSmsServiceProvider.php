@@ -10,6 +10,8 @@ class BeemSmsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
         $this->publishes([
             __DIR__ . "/../config/beem-sms.php" => config_path("beem-sms.php")
         ]);

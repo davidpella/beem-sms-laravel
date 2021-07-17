@@ -32,12 +32,13 @@
     },
     "autoload": {
         "psr-4": {
-            "DavidPella\\BeemSms\\": "src"
+            "DavidPella\\BeemSms\\": "src",
+            "DavidPella\\BeemSms\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DavidPella\\BeemSms\\Tests\\": "src"
+            "DavidPella\\BeemSms\\Tests\\": "tests"
         }
     },
     "scripts": {

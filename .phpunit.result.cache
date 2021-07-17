@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"DavidPella\\BeemSms\\Tests\\Unit\\ExampleTest::true_is_true":0.003}}
+{"version":1,"defects":{"DavidPella\\BeemSms\\Tests\\Unit\\NotifyAccountWasActivatedTest::it_can_notify_a_user_that_a_account_was_activated":4},"times":{"DavidPella\\BeemSms\\Tests\\Unit\\ExampleTest::true_is_true":0.003,"DavidPella\\BeemSms\\Tests\\Unit\\NotifyAccountWasActivatedTest::it_can_notify_a_user_that_a_account_was_activated":0.727}}
