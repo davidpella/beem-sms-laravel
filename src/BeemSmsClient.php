@@ -3,13 +3,13 @@
 namespace DavidPella\BeemSms;
 
 use ArrayAccess;
-use GuzzleHttp\Client;
-use Illuminate\Support\Arr;
-use Illuminate\Http\JsonResponse;
-use GuzzleHttp\Exception\ClientException;
-use Illuminate\Support\Facades\Response;
-use GuzzleHttp\Exception\GuzzleException;
 use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Response;
 
 class BeemSmsClient
 {
@@ -25,47 +25,48 @@ class BeemSmsClient
 
     public function __construct($apiKey, $secretKey)
     {
-        $this->apiKey       = $apiKey;
-        $this->secretKey    = $secretKey;
-        $this->baseUrl      = config("beem-sms.base_url");
+        $this->apiKey = $apiKey;
+        $this->secretKey = $secretKey;
+        $this->baseUrl = config('beem-sms.base_url');
     }
 
     /**
-     * @return JsonResponse
      * @throws CouldNotSendNotificationException|GuzzleException
+     *
+     * @return JsonResponse
      */
     public function dispatch(): JsonResponse
     {
         try {
             $client = new Client([
-                "base_uri" => $this->baseUrl,
-                "defaults" => [
-                    'verify' => false
-                ]
+                'base_uri' => $this->baseUrl,
+                'defaults' => [
+                    'verify' => false,
+                ],
             ]);
 
             $response = $client->request('POST', 'send', [
-                "auth" => [$this->apiKey, $this->secretKey],
-                "headers" => [
-                    "Accept" => 'application/json',
-                    "Content-Type" => "application/json",
+                'auth'    => [$this->apiKey, $this->secretKey],
+                'headers' => [
+                    'Accept'       => 'application/json',
+                    'Content-Type' => 'application/json',
                 ],
-                "json" => [
-                    'source_addr' => config("beem-sms.source_address"),
-                    'encoding' => 0,
+                'json' => [
+                    'source_addr'   => config('beem-sms.source_address'),
+                    'encoding'      => 0,
                     'schedule_time' => '',
-                    'message' => $this->message,
-                    'recipients' => [
+                    'message'       => $this->message,
+                    'recipients'    => [
                         [
-                            "recipient_id" => 1,
-                            "dest_addr" => $this->recipient
+                            'recipient_id' => 1,
+                            'dest_addr'    => $this->recipient,
                         ],
-                    ]
+                    ],
                 ],
             ]);
 
             if (!$response) {
-                throw new CouldNotSendNotificationException("Service Unknown");
+                throw new CouldNotSendNotificationException('Service Unknown');
             }
 
             return $this->parseResponse($response);
@@ -76,9 +77,11 @@ class BeemSmsClient
 
     /**
      * @param array $payload
-     * @return JsonResponse
+     *
      * @throws CouldNotSendNotificationException
      * @throws GuzzleException
+     *
+     * @return JsonResponse
      */
     public function send(array $payload): JsonResponse
     {
@@ -91,6 +94,7 @@ class BeemSmsClient
 
     /**
      * @param $text
+     *
      * @return $this
      */
     public function message($text): BeemSmsClient
@@ -102,6 +106,7 @@ class BeemSmsClient
 
     /**
      * @param $number
+     *
      * @return $this
      */
     public function recipient($number): BeemSmsClient
@@ -113,44 +118,48 @@ class BeemSmsClient
 
     /**
      * @param array $payload
+     *
      * @return array|ArrayAccess|mixed
      */
     protected function getRecipient(array $payload)
     {
-        return Arr::get($payload, "recipient", function () {
-            throw new CouldNotSendNotificationException("Recipient is required");
+        return Arr::get($payload, 'recipient', function () {
+            throw new CouldNotSendNotificationException('Recipient is required');
         });
     }
 
     /**
      * @param array $payload
+     *
      * @return array|ArrayAccess|mixed
      */
     protected function getMessage(array $payload)
     {
-        return Arr::get($payload, "message", function () {
-            throw new CouldNotSendNotificationException("Message is required");
+        return Arr::get($payload, 'message', function () {
+            throw new CouldNotSendNotificationException('Message is required');
         });
     }
 
     /**
      * @param $response
+     *
      * @return JsonResponse
      */
     protected function parseResponse($response): JsonResponse
     {
-        return Response::json(["response" => json_decode(
+        return Response::json(['response' => json_decode(
             $response->getBody()->getContents()
         )]);
     }
 
     /**
      * @param ClientException $exception
+     *
      * @return JsonResponse
      */
     protected function parseException(ClientException $exception): JsonResponse
     {
-        return Response::json(["error" => json_decode(
+        return Response::json(['error' => json_decode(
             $exception->getResponse()->getBody()->getContents()
         )]);
     }

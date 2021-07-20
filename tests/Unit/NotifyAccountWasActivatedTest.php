@@ -22,14 +22,16 @@ class NotifyAccountWasActivatedTest extends TestCase
 
         Notification::assertNothingSent();
 
-        $user->notify(new AccountActivated);
+        $user->notify(new AccountActivated());
 
         Notification::assertSentTo(
-            [$user], AccountActivated::class
+            [$user],
+            AccountActivated::class
         );
 
         Notification::assertNotSentTo(
-            [$user], AnotherNotification::class
+            [$user],
+            AnotherNotification::class
         );
     }
 }

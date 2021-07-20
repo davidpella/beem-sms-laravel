@@ -9,7 +9,7 @@ class AnotherNotification extends Notification
 {
     public function via($notifiable): array
     {
-        return ["mail"];
+        return ['mail'];
     }
 
     public function toMail($notifiable): MailMessage

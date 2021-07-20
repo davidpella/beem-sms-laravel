@@ -12,7 +12,7 @@ return [
     |
     |
     */
-    "base_url" => env("BEEM_SMS_BASE_URL", "https://apisms.beem.africa/v1/"),
+    'base_url' => env('BEEM_SMS_BASE_URL', 'https://apisms.beem.africa/v1/'),
     /*
     |--------------------------------------------------------------------------
     | Default Source Address
@@ -24,7 +24,7 @@ return [
     |
     |
     */
-    "source_address" => env("BEEM_SMS_SOURCE_ADDRESS", "INFO"),
+    'source_address' => env('BEEM_SMS_SOURCE_ADDRESS', 'INFO'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     | Supported: "pusher", "ably", "redis", "log", "null"
     |
     */
-    "api_key" => env("BEEM_SMS_API_KEY"),
+    'api_key' => env('BEEM_SMS_API_KEY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,5 +50,5 @@ return [
     | any of the connections defined in the "connections" array below.
     |
     */
-    "secret_key" => env("BEEM_SMS_SECRET_KEY")
+    'secret_key' => env('BEEM_SMS_SECRET_KEY'),
 ];

@@ -43,6 +43,7 @@ class BeemSmsMessage
 
     /**
      * @param $recipient
+     *
      * @return $this
      */
     public function recipient($recipient): BeemSmsMessage
@@ -54,6 +55,7 @@ class BeemSmsMessage
 
     /**
      * @param $content
+     *
      * @return $this
      */
     public function content($content): BeemSmsMessage
