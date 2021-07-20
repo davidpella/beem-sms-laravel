@@ -14,7 +14,7 @@ class AccountActivated extends Notification
 
     public function toBeemSms($notifiable): BeemSmsMessage
     {
-        return (new BeemSmsMessage)
+        return (new BeemSmsMessage())
             ->content("Hello {$notifiable->name}, Your account was created!");
     }
 }

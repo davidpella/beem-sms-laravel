@@ -8,15 +8,15 @@ class CreateUsersTable extends Migration
 {
     public function up()
     {
-        Schema::create("users", function (Blueprint $table){
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string("phone");
+            $table->string('phone');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists("users");
+        Schema::dropIfExists('users');
     }
 }

@@ -12,7 +12,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            "phone" => $this->faker->phoneNumber
+            'phone' => $this->faker->phoneNumber,
         ];
     }
 }

@@ -2,16 +2,16 @@
 
 namespace DavidPella\BeemSms\Channel;
 
+use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Notifications\Notification;
-use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
 
 class BeemSmsChannel
 {
-
     /**
      * @param $notifiable
      * @param Notification $notification
+     *
      * @throws CouldNotSendNotificationException
      * @throws GuzzleException
      */
@@ -21,8 +21,8 @@ class BeemSmsChannel
 
         $recipient = $this->getIdentification($notification, $notifiable);
 
-        if (! $message instanceof BeemSmsMessage) {
-            throw new CouldNotSendNotificationException("Invalid Message Object");
+        if (!$message instanceof BeemSmsMessage) {
+            throw new CouldNotSendNotificationException('Invalid Message Object');
         }
 
         if ($recipient) {
@@ -33,8 +33,10 @@ class BeemSmsChannel
     /**
      * @param Notification $notification
      * @param $notifiable
-     * @return mixed
+     *
      * @throws CouldNotSendNotificationException
+     *
+     * @return mixed
      */
     protected function getIdentification(Notification $notification, $notifiable)
     {
@@ -50,6 +52,6 @@ class BeemSmsChannel
             return $notifiable->phone;
         }
 
-        throw new CouldNotSendNotificationException("Invalid Recipient");
+        throw new CouldNotSendNotificationException('Invalid Recipient');
     }
 }

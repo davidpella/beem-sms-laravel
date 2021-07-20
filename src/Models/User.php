@@ -10,7 +10,6 @@ use Illuminate\Notifications\Notifiable;
 class User extends Model
 {
     use Notifiable;
-
     use HasFactory;
 
     protected $guarded = [];
