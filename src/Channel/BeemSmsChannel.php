@@ -13,7 +13,6 @@ class BeemSmsChannel
      * @param Notification $notification
      *
      * @throws CouldNotSendNotificationException
-     * @throws GuzzleException
      */
     public function send($notifiable, Notification $notification)
     {
