@@ -2,11 +2,12 @@
 
 namespace DavidPella\BeemSms\Tests\Unit;
 
-use DavidPella\BeemSms\Models\User;
+use DavidPella\BeemSms\Models\TestUser;
 use DavidPella\BeemSms\Notifications\AccountActivated;
 use DavidPella\BeemSms\Notifications\AnotherNotification;
 use DavidPella\BeemSms\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 
 class NotifyAccountWasActivatedTest extends TestCase
@@ -18,7 +19,7 @@ class NotifyAccountWasActivatedTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = TestUser::factory()->create();
 
         Notification::assertNothingSent();
 
@@ -32,6 +33,13 @@ class NotifyAccountWasActivatedTest extends TestCase
         Notification::assertNotSentTo(
             [$user],
             AnotherNotification::class
+        );
+    }
+
+    public function it_()
+    {
+        Notification::assertSentTo(
+            new AnonymousNotifiable, AccountActivated::class
         );
     }
 }

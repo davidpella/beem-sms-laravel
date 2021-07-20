@@ -20,7 +20,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        include_once __DIR__.'/../database/migrations/2018_08_08_100000_create_users_table.php';
+        include_once __DIR__ . '/../database/migrations/create_users_table.php';
 
         (new \CreateUsersTable())->up();
     }
