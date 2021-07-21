@@ -39,7 +39,8 @@ class NotifyAccountWasActivatedTest extends TestCase
     public function it_()
     {
         Notification::assertSentTo(
-            new AnonymousNotifiable, AccountActivated::class
+            new AnonymousNotifiable(),
+            AccountActivated::class
         );
     }
 }
