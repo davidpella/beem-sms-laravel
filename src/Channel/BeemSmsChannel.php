@@ -3,7 +3,6 @@
 namespace DavidPella\BeemSms\Channel;
 
 use DavidPella\BeemSms\Exceptions\CouldNotSendNotificationException;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Notifications\Notification;
 
 class BeemSmsChannel
